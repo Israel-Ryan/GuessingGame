@@ -1,10 +1,13 @@
 #include <iostream>
 #include <cstdlib>
+#include <exception>
+#include <stdexcept>
 
 int main() {
         //Define lower and upper bounds for play area
     int maxValue = 100;
     int minValue = 0;
+    bool isNumber = false;
         
         //Ensure that the guess will never already equal a valid option
     int guess = maxValue + 1;
@@ -12,23 +15,34 @@ int main() {
 
         //Choose a random number, and ensure that it is within the range of values
     srand(time(0));
-    const int CORRECT = rand() % maxValue+1;
+    const int SECRET_NUMBER = rand() % maxValue+1;
 
         //Gameplay loop
-    while(guess != CORRECT) {
-        std::cout << "Please choose a number between: " + std::to_string(minValue) + " And " + std::to_string(maxValue) << std::endl;
+    while(guess != SECRET_NUMBER) {
+        std::cout << "Please choose a number between: " << minValue << " And " << maxValue << std::endl;
 
-        std::cin >> guess;
+        std::string input;
+        do {
+            std::getline(std::cin, input);
+            try {
+                guess = std::stoi(input);
+                isNumber = true;
+            } catch (const std::invalid_argument& e) {
+                std::cout << "The Number was not valid, choose another!" << std::endl;
+                std::cin.clear();
+                std::cin.ignore();
+            }
+        } while (!isNumber);
 
-        if(guess == CORRECT) {
+        if(guess == SECRET_NUMBER) {
             std::cout << "YOU WON!! CONGRATULATIONS!";
             return 1;
         }
 
 
-        if(guess > CORRECT && guess <= maxValue) {
+        if(guess > SECRET_NUMBER && guess <= maxValue) {
             maxValue = guess;
-        } else if (guess < CORRECT && guess >= minValue) {
+        } else if (guess < SECRET_NUMBER && guess >= minValue) {
             minValue = guess;
         }
 
