@@ -29,8 +29,6 @@ int main() {
                 isNumber = true;
             } catch (const std::invalid_argument& e) {
                 std::cout << "The Number was not valid, choose another!" << std::endl;
-                std::cin.clear();
-                std::cin.ignore();
             }
         } while (!isNumber);
 
