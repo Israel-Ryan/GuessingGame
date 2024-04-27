@@ -37,7 +37,6 @@ int main() {
             return 1;
         }
 
-
         if(guess > SECRET_NUMBER && guess <= maxValue) {
             maxValue = guess;
         } else if (guess < SECRET_NUMBER && guess >= minValue) {
